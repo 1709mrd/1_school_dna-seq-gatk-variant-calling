@@ -1,7 +1,7 @@
 rule select_calls:
     input:
         ref=get_genome_fun,
-        vcf=get_strelka_res() if config['processing']['strelka'] else "results/genotyped/all.vcf.gz"
+        vcf="results/genotyped/all.strelka.vcf.gz" if config['processing']['strelka'] else "results/genotyped/all.vcf.gz"
     output:
         vcf=temp("results/filtered/all.{vartype}.vcf.gz"),
     params:

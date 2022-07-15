@@ -122,5 +122,13 @@ rule merge_samples_after_strelka:
         expand(rules.merge_single_sample_contigs_after_strelka.output, sample=samples.index)
     output:
         vcf="results/genotyped/all.strelka.vcf.gz",
-    shell:
-        "bcftools merge  {input}  |  bcftools norm -m - -O z -o  {output}"
+    run:
+        from subprocess import call
+        if len(samples.index) > 1:
+            call("bcftools merge  {input}  |  bcftools norm -m - -O z -o  {output}".format(input=input,
+            output=output), shell = True)
+            call("tabix {output}".format(output=output),shell=True)
+        else:
+            call("mv {input} {output} ".format(input=input,
+            output=output),shell=True)
+            call("tabix {output}".format(output=output),shell=True)
