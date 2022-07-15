@@ -182,3 +182,9 @@ def get_sample_level_vcf_or_gvcf(wildcards):
             "results/genotyped/all.{contig}.vcf.gz", contig=get_contigs()
         ),
 
+
+def get_strelka_res():
+    if len(samples.index) > 1:
+        return rules.merge_samples_after_strelka.output
+    else:
+        return rules.merge_single_sample_contigs_after_strelka.output
