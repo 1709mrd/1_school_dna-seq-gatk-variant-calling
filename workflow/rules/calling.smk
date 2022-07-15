@@ -96,10 +96,30 @@ rule genotype_variants:
 
 rule merge_variants:
     input:
-        vcfs=get_sample_level_vcf_or_gvcf
+        vcfs=lambda w: expand(
+            "results/genotyped/all.{contig}.vcf.gz", contig=get_contigs()
+        ),
     output:
         vcf="results/genotyped/all.vcf.gz",
     log:
         "logs/picard/merge-genotyped.log",
     wrapper:
         "0.74.0/bio/picard/mergevcfs"
+
+rule merge_single_sample_contigs_after_strelka:
+    input:
+        expand(rules.call_strelka.output, sample={wildcards.sample} ,contig=get_contigs())
+    output:
+        "results/called/{sample}.vcf.gz"
+    log:
+        "logs/picard/merge-genotyped.log",
+    wrapper:
+        "0.74.0/bio/picard/mergevcfs"
+
+rule merge_samples_after_strelka:
+    input:
+        expand(rules.merge_single_sample_contigs_after_strelka.output, sample=samples.index)
+    output:
+        vcf="results/genotyped/all.strelka.vcf.gz",
+    shell:
+        "bcftools merge  {input}  |  bcftools norm -m - -O z -o  {output}"
