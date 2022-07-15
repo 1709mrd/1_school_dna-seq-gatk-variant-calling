@@ -109,7 +109,7 @@ rule merge_variants:
 
 rule merge_single_sample_contigs_after_strelka:
     input:
-        expand(rules.call_strelka.output,sample="{sample}", contig=get_contigs())
+        vcfs=expand(rules.call_strelka.output,sample="{sample}", contig=get_contigs())
     output:
         "results/called/{sample}.vcf.gz",
     log:
