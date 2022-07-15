@@ -106,13 +106,14 @@ rule merge_variants:
     wrapper:
         "0.74.0/bio/picard/mergevcfs"
 
+
 rule merge_single_sample_contigs_after_strelka:
     input:
-        expand(rules.call_strelka.output, sample={wildcards.sample} ,contig=get_contigs())
+        expand(rules.call_strelka.output,sample="{sample}", contig=get_contigs())
     output:
-        "results/called/{sample}.vcf.gz"
+        "results/called/{sample}.vcf.gz",
     log:
-        "logs/picard/merge-genotyped.log",
+        "logs/picard/{sample}.merge-genotyped.log",
     wrapper:
         "0.74.0/bio/picard/mergevcfs"
 
