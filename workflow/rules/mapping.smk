@@ -124,13 +124,4 @@ rule samtools_index_dedup:
     wrapper:
         "0.74.0/bio/samtools/index"
 
-rule samtools_index:
-    input:
-        "{prefix}.bam.tsv",
-    output:
-        "{prefix}.bam.bai",
-        "123"
-    log:
-        "logs/samtools/index/{prefix}.log",
-    wrapper:
-        "0.74.0/bio/samtools/index"
+

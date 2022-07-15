@@ -35,7 +35,7 @@ rule call_variants:
     wrapper:
         "0.59.0/bio/gatk/haplotypecaller"
 
-rule call_strelka_contigs:
+rule create_strelka_contigs:
     input:
         contigs=get_contigs(),
         genome_dict=rules.genome_dict.output
