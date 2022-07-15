@@ -37,7 +37,6 @@ rule call_variants:
 
 rule create_strelka_contigs:
     input:
-        contigs=get_contigs(),
         genome_dict=rules.genome_dict.output
     output:
         bed="results/strelka_beds/{contig}.bed.gz",
@@ -55,7 +54,7 @@ rule call_strelka:
     input:
         bam=get_sample_bams,
         ref=get_genome_fun,
-        regions=rules.create_strelka_contigs.output.bed
+        regions="results/strelka_beds/{contig}.bed.gz"
     output:
         vcf="results/called/{sample}_{contig}/variants/variants.vcf.gz"
     shell:
@@ -68,9 +67,7 @@ rule call_strelka:
 rule combine_calls:
     input:
         ref=get_genome_fun,
-        gvcfs=expand(
-            "results/called/{sample}.{{contig}}.g.vcf.gz", sample=samples.index
-        ),
+        gvcfs=get_sample_level_vcf_or_gvcf,
     output:
         gvcf="results/called/all.{contig}.g.vcf.gz",
     log:

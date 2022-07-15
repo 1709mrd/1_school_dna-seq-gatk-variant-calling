@@ -174,11 +174,11 @@ def get_filter(wildcards):
 
 def get_sample_level_vcf_or_gvcf(wildcards):
     if config["processing"]["strelka"]:
-        expand(
+        return expand(
             "results/called/{sample}_{{contig}}/variants/variants.vcf.gz",sample=samples.index
         )
     else:
-        expand(
+        return expand(
             "results/called/{sample}.{{contig}}.g.vcf.gz",sample=samples.index
         )
 
