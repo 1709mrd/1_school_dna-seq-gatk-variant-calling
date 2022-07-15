@@ -27,6 +27,7 @@ filtering:
       "QD < 2.0 || FS > 200.0 || ReadPosRankSum < -20.0"
 
 processing:
+  bqsr: true
   minimap: true
   remove-duplicates: true
   # restrict-regions: ../raw/captured_regions.bed

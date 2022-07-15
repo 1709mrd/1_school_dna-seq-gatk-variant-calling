@@ -114,11 +114,22 @@ rule apply_base_quality_recalibration:
         "0.74.0/bio/gatk/applybqsr"
 
 
+rule samtools_index_dedup:
+    input:
+        "results/dedup/{sample}-{unit}.bam",
+    output:
+        "results/dedup/{sample}-{unit}.bam.bai",
+    log:
+        "logs/samtools/index_mdup/{sample}-{unit}.log",
+    wrapper:
+        "0.74.0/bio/samtools/index"
+
 rule samtools_index:
     input:
-        "{prefix}.bam",
+        "{prefix}.bam.tsv",
     output:
         "{prefix}.bam.bai",
+        "123"
     log:
         "logs/samtools/index/{prefix}.log",
     wrapper:

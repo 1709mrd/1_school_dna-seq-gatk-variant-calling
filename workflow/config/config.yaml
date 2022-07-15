@@ -31,6 +31,7 @@ filtering:
 
 processing:
   minimap: true
+  bqsr: true
   remove-duplicates: true
   strelka: true
   # Uncomment and point to a bed file with, e.g., captured regions if necessary,
