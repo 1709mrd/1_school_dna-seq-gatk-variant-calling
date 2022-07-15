@@ -56,10 +56,12 @@ rule call_strelka:
         ref=get_genome_fun,
         regions="results/strelka_beds/{contig}.bed.gz"
     output:
-        vcf="results/called/{sample}_{contig}/variants/variants.vcf.gz"
+        vcf="results/called/{sample}_{contig}/results/variants/variants.vcf.gz"
+    params:
+        strelka=config['local_soft']['strelka']
     shell:
         """
-        configureStrelkaGermlineWorkflow.py --bam {input.bam} --referenceFasta \
+        {params.strelka} --bam {input.bam} --referenceFasta \
         {input.ref} --runDir results/called/{wildcards.sample}_{wildcards.contig} --callRegions {input.regions} 
         results/called/{wildcards.sample}_{wildcards.contig}/runWorkflow.py -m local
         """
