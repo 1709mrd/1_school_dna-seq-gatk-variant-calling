@@ -153,3 +153,13 @@ def get_vartype_arg(wildcards):
 def get_filter(wildcards):
     return {"snv-hard-filter": config["filtering"]["hard"][wildcards.vartype]}
 
+def get_sample_level_vcf_or_gvcf(wildcards):
+    if config["processing"]["strelka"]:
+        expand(
+            "results/called/{sample}_{{contig}}/variants/variants.vcf.gz",sample=samples.index
+        )
+    else:
+        expand(
+            "results/called/{sample}.{{contig}}.g.vcf.gz",sample=samples.index
+        )
+
