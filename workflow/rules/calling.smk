@@ -69,7 +69,9 @@ rule call_strelka:
 rule combine_calls:
     input:
         ref=get_genome_fun,
-        gvcfs=get_sample_level_vcf_or_gvcf,
+        gvcfs=expand(
+            "results/called/{sample}.{{contig}}.g.vcf.gz", sample=samples.index
+        )
     output:
         gvcf="results/called/all.{contig}.g.vcf.gz",
     log:
@@ -94,9 +96,7 @@ rule genotype_variants:
 
 rule merge_variants:
     input:
-        vcfs=lambda w: expand(
-            "results/genotyped/all.{contig}.vcf.gz", contig=get_contigs()
-        ),
+        vcfs=get_sample_level_vcf_or_gvcf
     output:
         vcf="results/genotyped/all.vcf.gz",
     log:

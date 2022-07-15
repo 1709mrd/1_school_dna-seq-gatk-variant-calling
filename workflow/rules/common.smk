@@ -178,7 +178,7 @@ def get_sample_level_vcf_or_gvcf(wildcards):
             "results/called/{sample}_{{contig}}/results/variants/variants.vcf.gz",sample=samples.index
         )
     else:
-        return expand(
-            "results/called/{sample}.{{contig}}.g.vcf.gz",sample=samples.index
-        )
+        return lambda w: expand(
+            "results/genotyped/all.{contig}.vcf.gz", contig=get_contigs()
+        ),
 
