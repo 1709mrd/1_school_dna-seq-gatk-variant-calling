@@ -57,15 +57,13 @@ rule call_strelka:
         regions="results/strelka_beds/{contig}.bed.gz"
     output:
         vcf="results/called/{sample}_{contig}/results/variants/variants.vcf.gz"
-    log:
-        "logs/strelka/call_strelka.{sample}_{contig}.log"
     params:
         strelka=config['local_soft']['strelka']
     shell:
         """
         {params.strelka} --bam {input.bam} --referenceFasta \
         {input.ref} --runDir results/called/{wildcards.sample}_{wildcards.contig} --callRegions {input.regions} 
-        results/called/{wildcards.sample}_{wildcards.contig}/runWorkflow.py -m local --quiet 2>&1 {log}
+        results/called/{wildcards.sample}_{wildcards.contig}/runWorkflow.py -m local --quiet
         """
 
 rule combine_calls:
