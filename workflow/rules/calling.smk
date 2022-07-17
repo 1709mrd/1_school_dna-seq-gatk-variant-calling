@@ -53,6 +53,9 @@ rule create_strelka_contigs:
 rule call_strelka:
     input:
         bam=get_sample_bams,
+        bai= (get_bai
+                if not config['processing']['bqsr']
+                else[]),
         ref=get_genome_fun,
         regions="results/strelka_beds/{contig}.bed.gz"
     output:
