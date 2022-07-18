@@ -81,7 +81,7 @@ def get_trimmed_reads(wildcards):
         return {"r1": fastqs.fq1}
 
 def get_sample_bams(wildcards):
-"""Get all aligned reads of given sample."""
+    """Get all aligned reads of given sample."""
     if config['processing']['bqsr']:
         return expand(
             "results/recal/{sample}-{unit}.bam",
