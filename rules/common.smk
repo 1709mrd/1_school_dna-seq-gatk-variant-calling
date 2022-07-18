@@ -72,7 +72,7 @@ def get_trimmed_reads(wildcards):
             "results/trimmed/{sample}-{unit}.{group}.fastq.gz", group=[1, 2], **wildcards
         )
     # single end sample
-    return "results/trimmed/{sample}-{unit}.fastq.gz".format(**wildcards
+    return "results/trimmed/{sample}-{unit}.fastq.gz".format(**wildcards)
 
 def get_reads(wildcards):
     if config['processing']['trim']:
