@@ -66,7 +66,7 @@ def get_read_group(wildcards):
 
 def get_trimmed_reads(wildcards):
     """Get trimmed reads of given sample-unit."""
-    if config['processing']['trim']
+    if config['processing']['trim']:
         if not is_single_end(**wildcards):
             # paired-end sample
             return expand(
@@ -74,7 +74,7 @@ def get_trimmed_reads(wildcards):
             )
         # single end sample
         return "trimmed/{sample}-{unit}.fastq.gz".format(**wildcards),
-    else
+    else:
         fastqs = units.loc[(wildcards.sample, wildcards.unit), ["fq1", "fq2"]].dropna()
             if len(fastqs) == 2:
                 return {"r1": fastqs.fq1, "r2": fastqs.fq2}
