@@ -88,7 +88,7 @@ def get_sample_bams(wildcards):
             sample=wildcards.sample,
             unit=units.loc[wildcards.sample].unit,
         )
-    else
+    else:
         return expand(
             "results/dedup/{sample}-{unit}.bam",
             sample=wildcards.sample,
