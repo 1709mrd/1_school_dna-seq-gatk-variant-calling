@@ -76,9 +76,9 @@ def get_trimmed_reads(wildcards):
         return "trimmed/{sample}-{unit}.fastq.gz".format(**wildcards),
     else:
         fastqs = units.loc[(wildcards.sample, wildcards.unit), ["fq1", "fq2"]].dropna()
-            if len(fastqs) == 2:
-                return {"r1": fastqs.fq1, "r2": fastqs.fq2}
-            return {"r1": fastqs.fq1}
+        if len(fastqs) == 2:
+            return {"r1": fastqs.fq1, "r2": fastqs.fq2}
+        return {"r1": fastqs.fq1}
 
 def get_sample_bams(wildcards):
 """Get all aligned reads of given sample."""
